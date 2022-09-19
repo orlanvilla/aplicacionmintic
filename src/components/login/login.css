@@ -1,25 +1,34 @@
 .contenedor-login{
-    background-color: #060b23;
+  background: linear-gradient(to left, #0160b4, #00d78c); 
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
 }
+
 .contenido-login{ 
      width: 50rem;
     max-width: 95%;
-    height: 50rem;
+    height: 52rem;
     margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center; 
     gap: 4rem; 
-    border: solid 3px white;  
+  
     margin-top: 4rem; 
     border-radius: 1rem; 
     box-shadow: rgba(253, 251, 251, 0.35) 0px 5px 15px;
+    transition-duration: 0.5s;
+    background-color: #013a5c;
+    
+}
+.contenido-login:hover{
+  box-shadow: rgba(96, 225, 248, 0.35) 0px 5px 20px;
+  transition-duration: 0.5s;
+  
 }
 .logo img{
     width: 25rem;
@@ -53,10 +62,10 @@
 
   }
   .form-input:hover{
-    border-color: rgb(226, 241, 11);      
+         
   }
   .form-input:focus {
-    border-color: rgb(12, 228, 12);
+    border-color: rgb(87, 210, 248);
   }
 
   .form__label {
@@ -67,7 +76,8 @@
     color: white;
     cursor: text;
     transition: top 0.3s ease-in, left 0.3s ease-in, font-size 0.3s ease-in;
-    background-color: #060b23;
+    background-color:#013a5c;
+    ;
   }
   .form-input:focus ~ .form__label,
 .form-input:not(:placeholder-shown).form-input:not(:focus) ~ .form__label {
@@ -80,7 +90,7 @@
 }
 
 .btn-ingresar input{
-    background-color: rgb(180, 180, 185);
+  background: linear-gradient(to left, #0160b4, #00d78c); 
     padding: 1rem 3rem;
     border-radius: 0.7rem;
     text-transform: uppercase;
@@ -88,13 +98,28 @@
     border: none;
     transition-duration: 0.5s;
     cursor: pointer;
+    margin-bottom: 0;
+    color: white;
+   
 }
 .btn-ingresar input:hover{
    transform: scale(1.1, 1.1);
    transition-duration: 0.5s;
    background-color: transparent;
+   background: linear-gradient(to left,transparent, transparent); 
    color: white;
    border-bottom: solid 3px greenyellow;
    border-radius: 0;
 }
+.nav-registro{
+  margin-bottom: 2rem;
+  color: yellow; 
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+.nav-registro:hover{
+  transform:scale(1.1, 1.1);
+  color: white;
+}
+
 

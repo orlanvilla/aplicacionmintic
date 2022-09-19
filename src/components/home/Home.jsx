@@ -8,6 +8,7 @@ import Empresas from '../empresas/Empresas'
 import { GenerarId } from '../../helpers/helpers'
 import ModalIngresos from '../modales/ModalIngresos'
 import btn_salir from '../../img/btn-salir.png'
+import swal from 'sweetalert'
 
 const Home = () => {
   const [pagina, setPagina] = useState("principal")
@@ -45,8 +46,26 @@ const guardarEgresos=(egreso)=>{
   setEgresos([...egresos, egreso])
   setModal(false)
 }
-
-
+const mostrarAlerta=()=>{
+  swal({   
+    title:"¿Desea cerrar sesión?",
+    icon:'info',
+    buttons:["Cancelar", "Aceptar"],
+      
+  })
+    .then((salir)=>{
+      if(salir){
+        swal({
+          icon: "success",
+          title: "¡Adios!",
+          timer:1000,
+          button: false, 
+                  
+        })
+      }
+    })
+ 
+  };
 
   return (
     <>
@@ -54,6 +73,7 @@ const guardarEgresos=(egreso)=>{
     <div className='btn-salir'>
       <img      
         src={btn_salir}
+        onClick={mostrarAlerta}
       />
     </div>  
         <div className='contenido-header'>

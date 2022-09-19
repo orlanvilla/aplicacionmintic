@@ -1,6 +1,18 @@
+import { useState } from 'react'
 import './login.css'
 import logo from '../../img/logo.png'
+import ModalRegistro from './ModalRegistro';
+import swal from 'sweetalert'
+
 const Login = () => {
+
+    const [modal, setModal] = useState(false);
+
+    const handleAbrirModalRegistro=(e)=>{
+        
+        setModal(true)
+        return
+    }
   return (
     <div className='contenedor-login'>
         
@@ -26,8 +38,16 @@ const Login = () => {
                     value="Ingresar"
                 />            
             </div>
+            <nav className='nav-registro'>
+                <a
+                onClick={handleAbrirModalRegistro}
+                >Regístrate aquí</a>
+            </nav>
 
         </div>
+        {modal&& <ModalRegistro
+                    setModal={setModal}
+        />}
       
     </div>
   )
