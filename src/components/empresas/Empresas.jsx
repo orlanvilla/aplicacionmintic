@@ -10,6 +10,7 @@ const Empresas = ({modal, setModal}) => {
       <TablaEmpresa
         modal={modal}
         setModal={setModal}
+        
       />
     </div>
   )

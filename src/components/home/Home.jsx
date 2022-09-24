@@ -1,24 +1,23 @@
-import { useState, useEffect} from 'react'
+import { useState, useContext, useEffect} from 'react'
+import { AppContext } from '../../context/AppContex'
 import './home.css'
 import logoPrincipal from '../../img/icono.png'
 import Principal from '../vistaPrincipal/Principal'
 import IngresosGastos from '../imgresosEgresos/IngresosGastos'
 import Usuarios from '../usuarios/Usuarios'
 import Empresas from '../empresas/Empresas'
-import { GenerarId } from '../../helpers/helpers'
-import ModalIngresos from '../modales/ModalIngresos'
 import btn_salir from '../../img/btn-salir.png'
 import swal from 'sweetalert'
+import { PeticionesApi } from '../../peticioneApi/PeticionesApi'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const{cargarIngresos}=PeticionesApi();
   const [pagina, setPagina] = useState("principal")
-  const [modal, setModal] = useState(false);
-  const [ingresos, setIngresos] = useState([]);
-  const [egresos, setEgresos] = useState([]);
-  const [ingresoEditar, setIngresoEditar] = useState({});
-  const [egresoEditar, setEgresoEditar] = useState({});
+  const{usuario, setLogueado}=useContext(AppContext);
+  const navigate=useNavigate();
 
-
+  
 const handlePrincipal=(e)=>{
   e.preventDefault();
   setPagina("principal")
@@ -36,16 +35,7 @@ const handleEmpresas=(e)=>{
   e.preventDefault();
   setPagina("empresas")
 }
-const guardarIngresos=(ingreso)=>{
-  ingreso.id=GenerarId();
-  setIngresos([...ingresos, ingreso])
-  setModal(false)
-}
-const guardarEgresos=(egreso)=>{
-  egreso.id=GenerarId();
-  setEgresos([...egresos, egreso])
-  setModal(false)
-}
+
 const mostrarAlerta=()=>{
   swal({   
     title:"¿Desea cerrar sesión?",
@@ -54,18 +44,11 @@ const mostrarAlerta=()=>{
       
   })
     .then((salir)=>{
-      if(salir){
-        swal({
-          icon: "success",
-          title: "¡Adios!",
-          timer:1000,
-          button: false, 
-                  
-        })
-      }
-    })
- 
-  };
+      if(salir){       
+    setLogueado(false)
+    navigate("/login")
+    localStorage.clear();
+  }})};
 
   return (
     <>
@@ -74,6 +57,7 @@ const mostrarAlerta=()=>{
       <img      
         src={btn_salir}
         onClick={mostrarAlerta}
+
       />
     </div>  
         <div className='contenido-header'>
@@ -81,6 +65,7 @@ const mostrarAlerta=()=>{
                 <img
                 src={logoPrincipal}
                 />
+                <p>{usuario.empleado.nombre}</p>                
             </div> 
             <nav className='navegador-header'>
                  <a href='#'
@@ -89,9 +74,13 @@ const mostrarAlerta=()=>{
                 <a href='#'
                   onClick={handleIngresosGastos}
                 >Ingresos y Egresos</a>
+                {usuario.empleado.rol==="Administrador"? 
                 <a href='#'
                   onClick={handleUsuarios}
                 >Empleados</a>
+                :
+                null
+                 }                
                 <a href='#'
                   onClick={handleEmpresas}
                 >Empresa</a>
@@ -102,24 +91,9 @@ const mostrarAlerta=()=>{
     <main>
       <div>
         {pagina==="principal"? <Principal/>:""}
-        {pagina==="ingresosGastos"? <IngresosGastos
-                                      modal={modal}
-                                      setModal={setModal}
-                                      guardarIngresos={guardarIngresos}
-                                      ingresos={ingresos}
-                                      guardarEgresos={guardarEgresos}
-                                      egresos={egresos}
-                                      setIngresoEditar={setIngresoEditar}
-                                      setEgresoEditar={setEgresoEditar}                                     
-        />:""}
-        {pagina==="usuarios"? <Usuarios
-                              modal={modal}
-                              setModal={setModal}
-        />:""}
-        {pagina==="empresas"? <Empresas
-                              modal={modal}
-                              setModal={setModal}
-        />:""}
+        {pagina==="ingresosGastos"? <IngresosGastos/>:""}
+        {pagina==="usuarios"? <Usuarios/>:""}
+        {pagina==="empresas"? <Empresas/>:""}
 
       </div>
     </main>  
@@ -127,9 +101,6 @@ const mostrarAlerta=()=>{
     <footer className='contenedor-footer'>
     <p>Todos los derechos reservados @ 2022</p>
     </footer>
-
-
-
     </>
   )
 }

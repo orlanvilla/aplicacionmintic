@@ -30,14 +30,24 @@
 .navegador-header a:focus{
    color: rgb(42, 134, 58);   
    border-bottom: solid 2px #1d3557;
-   transform: scale(1.1,1.1);
-   
+   transform: scale(1.1,1.1);   
 }
 
 .logo-principal{   
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     height: 12rem;
+}
+   .logo-principal p{
+    color: rgb(49, 49, 49);
+    text-align: center;
+    margin-top: 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    margin-left: 3rem;
    }
 .navegador-header a{ 
     font-weight: 700;

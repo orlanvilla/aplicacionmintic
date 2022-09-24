@@ -1,23 +1,37 @@
-import {useEffect, useState} from 'react'
-import ModalEgresos from '../modales/ModalEgresos';
+import {useEffect, useContext} from 'react'
+import { AppContext } from '../../context/AppContex';
+import { PeticionesApi } from '../../peticioneApi/PeticionesApi';
 import './tablaEgresos.css'
-import { FormatoMoneda } from '../../helpers/helpers';
 import editar from '../../img/icono_editar.png'
 import eliminar from '../../img/icono_eliminar.png'
+import ModalEgresos from './ModalEgresos';
 
-const TablaEgresos = ({modal, setModal, guardarEgresos, egresos}) => {
-
-    const [totalEgresos, setTotalEgresos] = useState(0);
-
+const TablaEgresos = () => {
+    const{modal, setModal, transacciones, setTransaccion, totalEgresado}=useContext(AppContext);
+    const{cargarEgresos, cargarEmpresas, eliminarEgreso, calcularTotalEgreso}=PeticionesApi();
+ 
+    //listar agresos
     useEffect(()=>{
-        const totalSalida=egresos.reduce((total, egreso)=>egreso.monto+total, 0)
-        setTotalEgresos(totalSalida)
-        
-    },[egresos])
-      
+        cargarEgresos()  
+        cargarEmpresas()
+        calcularTotalEgreso()
+    },[transacciones]) 
+    
+    //Eliminar egresos
+    const handleEliminarEgreso=async(idtransaccion)=>{
+        await eliminarEgreso(idtransaccion);
+       await cargarEgresos();
+   }
+   //Modificar egresos
+   const modificarEgreso=(eg)=>{
+        setTransaccion(eg);
+        setModal(true);   
+   }
+
     const handelAbrirModal=(e)=>{
         e.preventDefault();
         setModal(true)
+        return
     }
   return (
     <div className='contenido-tablaegresos'>
@@ -27,50 +41,52 @@ const TablaEgresos = ({modal, setModal, guardarEgresos, egresos}) => {
           type="submit"
           value="Nuevo Egreso"
           onClick={handelAbrirModal}
+          
         />
         </div>
       <div  className='tabla-egresos'>
             <table>
                 <thead>
                     <tr>           
-                        <th width="40%">Concepto</th>
+                    <th width="37%">Concepto</th>
                         <th>Monto</th>
                         <th>Fecha</th>
-                        <th width="25%">Empleado</th>
+                        <th width="20%">Empleado</th>
+                        <th width="20%">Empresa</th>
                         <th >Acción</th>
                     </tr>
                 </thead>
                 <tbody className='cuerpo'>
-                    {egresos.map(egreso=>(
-                        <tr>                
-                            <td>{egreso.concepto}</td>
-                            <td>{FormatoMoneda(egreso.monto)}</td>
-                            <td>{egreso.fecha}</td>
-                            <td>{egreso.usuario}</td>
-                            <td>
+                {transacciones.map(egr=>(
+                    <tr>                
+                        <td>{egr.concepto}</td>
+                        <td>{egr.monto}</td>
+                        <td>{egr.fecha}</td>
+                        <td>{egr.empleado.nombre}</td>
+                        <td>{egr.empresa.nombre}</td>
+                        <td>
                             <img
                                 src={editar}
-                                onClick={handelAbrirModal}
+                                onClick={()=>modificarEgreso(egr)}                               
                             />
                             <img
                                 src={eliminar}
+                                onClick={()=>handleEliminarEgreso(egr.idtransaccion)}
                             />
                         </td>
-                        </tr>
-                    ))}
+                    </tr>
+                ))}
+                        
+                   
                   
                    
                 </tbody>
             </table>
             <div className='total-egresos'>
-                <p>Total: <span>{FormatoMoneda(totalEgresos)}</span></p>
+                <p>Total: <span>{totalEgresado}</span></p>
             </div>
 
-            {modal && <ModalEgresos
-                        setModal={setModal}
-                        guardarEgresos={guardarEgresos}
-                        egresos={egresos}
-            />}
+            {modal && <ModalEgresos/>}
         </div>
     </div>
   )

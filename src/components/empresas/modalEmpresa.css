@@ -17,7 +17,7 @@
     text-align: center;
     color: white;
     border-bottom: solid 2px rgb(17, 150, 17);
-    margin-top:  2rem;
+
   }
   .formulario-empresa{
     display: flex;
@@ -26,8 +26,8 @@
   }
 .formulario-empresa label{
     color: white;
-    font-size: 2rem;
-    margin-top: 2rem;
+    font-size: 1.8rem;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
 .formulario-empresa input, select {

@@ -89,7 +89,7 @@
     color: rgb(253, 253, 250);
 }
 
-.btn-ingresar input{
+.btn-ingresar input, button{
   background: linear-gradient(to left, #0160b4, #00d78c); 
     padding: 1rem 3rem;
     border-radius: 0.7rem;

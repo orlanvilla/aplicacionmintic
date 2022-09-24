@@ -1,12 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
+import { AppContext } from './context/AppContex'
 import './App.css'
 import Home from './components/home/Home'
 import Login from './components/login/Login';
+import Recargo from './components/recargo/recargo'
+
 
 function App() {
-  const [logueado, setLogueado] = useState(false);
-
+  const {logueado}=useContext(AppContext);
+  
   return (
     <div className="App">
     {logueado?
@@ -17,8 +20,9 @@ function App() {
       </BrowserRouter>
       :
       <BrowserRouter>
-        <Routes>
-          <Route exact path='/login' element={<Login/>}/>
+        <Routes>         
+          <Route exact path='/login' element={<Login/>}/>   
+          <Route path='*' element={<Recargo/>}/>         
         </Routes>
       </BrowserRouter>   
     }

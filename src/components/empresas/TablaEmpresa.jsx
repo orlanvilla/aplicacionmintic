@@ -1,17 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import './tablaEmpresa.css'
 import iconoeliminar from '../../img/icono_eliminar.png'
 import iconoactualizar from '../../img/icono_editar.png'
 import ModalEmpresa from './ModalEmpresa';
+import { AppContext } from '../../context/AppContex';
+import { PeticionesApi } from '../../peticioneApi/PeticionesApi';
 
+const TablaEmpresa = () => {  
+  const{empresas, setEmpresa, modal, setModal}=useContext(AppContext)
+  const{cargarEmpresas, eliminarEmpresa}=PeticionesApi();
 
-const TablaEmpresa = ({modal, setModal}) => {  
+// Para listar empresas desde la api
+useEffect(()=>{
+  cargarEmpresas()  
+},[])
+
+ //eliminar empresa
+ const handleEliminarEmpresa=async(nitempresa)=>{
+    await eliminarEmpresa(nitempresa);
+    await cargarEmpresas();
+} 
+  //modificar empresa
+  const modificarEmpresa=(empr)=>{
+    setEmpresa(empr)
+    setModal(true)      
+  }
   
   const handleAbrirModal=(e)=>{
     e.preventDefault();
-    setModal(true)
+    setModal(true)  
   }
- 
+  
   return (
     <div className='contenido-empresas'>
        <div className='input-nuevoempresa'>
@@ -29,34 +48,36 @@ const TablaEmpresa = ({modal, setModal}) => {
                         <th width="32%">Nombre</th>
                         <th width="25%">Dirección</th>
                         <th width="10%">Teléfono</th>
-                        <th width="17%">Tipo</th>
+                        {/* <th width="17%">Tipo</th> */}
                         <th width="27%">Acción</th>
                     </tr>
                 </thead>
-                <tbody className='cuerpo-empresa'>                
+                <tbody className='cuerpo-empresa'>  
+                  {empresas.map(emp=>(
                     <tr>                
-                        <td>Exito</td>
-                        <td>Bogotá</td>
-                        <td>123456454</td>
-                        <td>Cliente</td>
+                        <td>{emp.nombre}</td>
+                        <td>{emp.direccion}</td>
+                        <td>{emp.telefono}</td>
+                        {/* <td></td> */}
                         <td> 
                         <img
                             src={iconoactualizar}
                             alt="actualizar"
-                            onClick={handleAbrirModal}
+                            onClick={()=>modificarEmpresa(emp)}
                             />
                             <img
                             src={iconoeliminar}
                             alt="eliminar"
+                            onClick={()=>handleEliminarEmpresa(emp.nitempresa)}
                             />                         
                         </td>
-                    </tr>                   
+                    </tr>
+                  )) }             
+                                      
                 </tbody>
             </table>           
         </div>
-        {modal && <ModalEmpresa
-                  setModal={setModal}
-        />}
+        {modal && <ModalEmpresa/>}
     </div>
   )
 }

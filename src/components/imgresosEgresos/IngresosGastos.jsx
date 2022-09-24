@@ -1,11 +1,12 @@
 import {useState} from 'react';
+import { AppContext } from '../../context/AppContex';
 import './ingresosGastos.css';
 import TablaIngresos from './TablaIngresos';
 import TablaEgresos from './TablaEgresos';
 
-const IngresosGastos = ({modal, setModal, guardarIngresos, ingresos, guardarEgresos, egresos, setIngresoEditar, setEgresoEditar}) => {  
+const IngresosGastos = () => {  
   const [tablaGastos, setTablaGastos] = useState("tablaIngresos");
-
+  
   const handleIngresos=(e)=>{
     e.preventDefault();
     setTablaGastos("tablaIngresos")
@@ -20,7 +21,7 @@ const IngresosGastos = ({modal, setModal, guardarIngresos, ingresos, guardarEgre
   return (
     <div  className='contenedor-ingresosgastos'>
       <header className='header-ingresosgastos'>
-        <h2>Sistema de gestión de Ingresos y Gastos</h2>
+        <h2>Sistema de gestión de Ingresos y Gastos</h2>       
         <nav className='nav-ingresosgastos'>
           <a href='#' 
           onClick={handleIngresos} 
@@ -30,26 +31,9 @@ const IngresosGastos = ({modal, setModal, guardarIngresos, ingresos, guardarEgre
           >Egresos</a>
         </nav>      
       </header>    
-      {tablaGastos==="tablaIngresos"? <TablaIngresos
-                                        modal={modal}
-                                        setModal={setModal}
-                                        guardarIngresos={guardarIngresos}
-                                        ingresos={ingresos}
-                                        setIngresoEditar={setIngresoEditar}
-                                        
-                                       
-      />:""}
-      {tablaGastos==="tablaEgresos"? <TablaEgresos
-                                       modal={modal}
-                                       setModal={setModal}
-                                       guardarEgresos={guardarEgresos}
-                                       egresos={egresos}
-                                       setEgresoEditar={setEgresoEditar}
-      />:""}
-      
-     
-
-    </div>
+      {tablaGastos==="tablaIngresos"? <TablaIngresos/>:""}
+      {tablaGastos==="tablaEgresos"? <TablaEgresos/>:""}
+      </div>
   )
 }
 

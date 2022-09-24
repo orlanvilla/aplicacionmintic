@@ -1,4 +1,4 @@
-.contenedor-modalingresos{
+.contenedor-modalusuarios{
     background-color: rgba(5, 5, 5, 0.93);
     position: fixed;
     left: 0;
@@ -6,45 +6,42 @@
     top: 0;
     bottom: 0;    
 }
-.contenido-ingresos{ 
+.contenido-usuarios{ 
     width: 40%;
     max-width: 50rem;
     margin: auto;
-   margin-top: 5rem;
+   margin-top: 2rem;
   }
-  .contenido-ingresos h1{
+  .contenido-usuarios h1{
     text-align: center;
     color: white;
     border-bottom: solid 2px rgb(17, 150, 17);
-    margin-top:  2rem;
+    
   }
-  .formulario-ingresos{
+  .formulario-usuarios{
     display: flex;
     flex-direction: column;
     padding: 2rem 3rem;
   }
-.formulario-ingresos label{
+.formulario-usuarios label{
     color: white;
-    font-size: 2rem;
-    margin-top: 2rem;
+    font-size: 1.8rem;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
-.formulario-ingresos input, select {
+.formulario-usuarios input, select {
     padding: 1rem;
     border: none;
     outline: none;
     text-align: center;
     border-radius: 1rem;    
 }
-
-
-
-.input-ingreso{    
+.input-usuario{    
     display: flex;
     justify-content: center;
     margin-top: 2rem;
 }
-.input-ingreso input {
+.input-usuario input {
     padding: 1rem 2rem;
     text-transform: uppercase;
     font-weight: 700;
@@ -55,7 +52,7 @@
     border-radius: 1rem;
     transition-duration: .5s;
 }
-.input-ingreso input:hover{
+.input-usuario input:hover{
     transform: scale(1.1 ,1.1);  
 }
 
