@@ -6,7 +6,8 @@ import swal from 'sweetalert'
 export const PeticionesApi=()=>{
     const navigate=useNavigate();
 
-    const url= "http://localhost:8080/"
+    const url= "https://apiempresamintic2022.herokuapp.com/"
+    //const url="http://localhost:8080/"
 
     const{setEmpresas, 
         setEmpleados, 
@@ -327,6 +328,7 @@ export const PeticionesApi=()=>{
       const iniciarSesion=async(usuario, contraseña)=>{
         try {          
             const respuesta=await fetch(url+"usuarios")
+            console.log("respuesta Fetch:", respuesta)
             if(respuesta.status===200){
                 const respuestaUsuarios=await respuesta.json()
                 const us=respuestaUsuarios.find(user=>user.usuario===usuario && user.contraseña===contraseña)
@@ -345,8 +347,7 @@ export const PeticionesApi=()=>{
             }            
         } catch (error) {
             console.log(error)            
-        }
-       
+        }       
       }
       //############################### FUNCION PARA CREAR USUARIO Y CONTRASEÑA DEL EMPLEADO #########################################
 

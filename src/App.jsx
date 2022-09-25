@@ -20,7 +20,8 @@ function App() {
       </BrowserRouter>
       :
       <BrowserRouter>
-        <Routes>         
+        <Routes>  
+          <Route exact path='/' element={<Login/>}/>        
           <Route exact path='/login' element={<Login/>}/>   
           <Route path='*' element={<Recargo/>}/>         
         </Routes>
